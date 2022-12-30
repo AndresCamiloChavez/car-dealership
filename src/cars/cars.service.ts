@@ -1,30 +1,38 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { v4 as uuid } from 'uuid';
+import { CreateCarDto } from './dto/create-car.dto';
+import { Car } from './interfaces/car.interface';
 
 @Injectable()
 export class CarsService {
-  private cars = [
+  private cars: Car[] = [
     {
-        id: 1, 
-        brand: 'Toyota',
-        model: 'Corolla'
+      id: uuid(),
+      brand: 'Toyota',
+      model: 'Corolla',
     },
     {
-        id: 2, 
-        brand: 'Honda',
-        model: 'Civic'
+      id: uuid(),
+      brand: 'Honda',
+      model: 'Civic',
     },
     {
-        id: 3, 
-        brand: 'Jeep',
-        model: 'Cherokee'
+      id: uuid(),
+      brand: 'Jeep',
+      model: 'Cherokee',
     },
   ];
 
-  findAll(){
+  findAll() {
     return this.cars;
   }
-  findById(id: number){
-    return this.cars.find( car => car.id == id);
+  findById(id: string) {
+    const car = this.cars.find((car) => car.id == id);
+    if (!car) throw new NotFoundException('No se encontro el vehículo ' + id); // es atrapada por exeption Filter
+    return car;
   }
-
+  createCar(createCarDto: CreateCarDto) {
+    this.cars.push({ id: uuid(), ...createCarDto });
+    return { id: uuid(), ...createCarDto };
+  }
 }
