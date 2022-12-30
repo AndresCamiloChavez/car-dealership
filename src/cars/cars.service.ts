@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
 import { v4 as uuid } from 'uuid';
 import { CreateCarDto, UpdateCarDto } from './dto';
 import { Car } from './interfaces/car.interface';
@@ -39,6 +39,11 @@ export class CarsService {
 
     let carDB = this.findById(id);
 
+    if(updateCarDto.id && updateCarDto.id != carDB.id ){
+      throw new BadRequestException(`El carro con el ${updateCarDto.id} no existe`);
+
+    }
+
     this.cars = this.cars.map(car =>{
       if(car.id == id){
         carDB = {
@@ -51,5 +56,12 @@ export class CarsService {
       return car;
     });
     return carDB;
+  }
+  deleteCar(id: string){
+    const carDB = this.findById(id);
+    this.cars = this.cars.filter(car => car.id !=  id);
+    return {
+      msg: `Se a eliminado el carro con el id: ${id}`
+    };
   }
 }
