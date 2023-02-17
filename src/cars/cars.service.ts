@@ -6,21 +6,21 @@ import { Car } from './interfaces/car.interface';
 @Injectable()
 export class CarsService {
   private cars: Car[] = [
-    {
-      id: uuid(),
-      brand: 'Toyota',
-      model: 'Corolla',
-    },
-    {
-      id: uuid(),
-      brand: 'Honda',
-      model: 'Civic',
-    },
-    {
-      id: uuid(),
-      brand: 'Jeep',
-      model: 'Cherokee',
-    },
+    // {
+    //   id: uuid(),
+    //   brand: 'Toyota',
+    //   model: 'Corolla',
+    // },
+    // {
+    //   id: uuid(),
+    //   brand: 'Honda',
+    //   model: 'Civic',
+    // },
+    // {
+    //   id: uuid(),
+    //   brand: 'Jeep',
+    //   model: 'Cherokee',
+    // },
   ];
 
   findAll() {
@@ -63,5 +63,9 @@ export class CarsService {
     return {
       msg: `Se a eliminado el carro con el id: ${id}`
     };
+  }
+
+  fillCars(cars: Car[]){
+    this.cars = cars;
   }
 }

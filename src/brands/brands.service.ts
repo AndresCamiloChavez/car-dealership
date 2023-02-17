@@ -7,11 +7,11 @@ import { UpdateBrandDto } from './dto/update-brand.dto';
 @Injectable()
 export class BrandsService {
   private brands: Brand[] = [
-    {
-      id: uuid(),
-      name: 'Toyota',
-      createAt: new Date().getTime(),
-    },
+    // {
+    //   id: uuid(),
+    //   name: 'Toyota',
+    //   createAt: new Date().getTime(),
+    // },
   ];
 
   create(createBrandDto: CreateBrandDto) {
@@ -62,5 +62,9 @@ export class BrandsService {
     return {
       msg: `Se ha eliminado la brand ${id}`,
     };
+  }
+
+  fillBrands(brands: Brand[]) {
+    this.brands = brands;
   }
 }
